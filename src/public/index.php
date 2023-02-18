@@ -2,11 +2,14 @@
 
 declare(strict_types=1);
 
+require_once '../PaymentProfile.php';
+require_once '../Customer.php';
 require_once '../Transaction.php';
 
-$amount = (new Transaction(100, 'Transaction 1'))
+$transaction = (new Transaction(100, 'Transaction 1'))
     ->addTax(8)
-    ->applyDiscount(10)
-    ->getAmount();
+    ->applyDiscount(10);
 
-var_dump($amount);
+$transaction->customer = new Customer();
+
+echo $transaction->customer?->paymentProfile?->id ?? 'foo';

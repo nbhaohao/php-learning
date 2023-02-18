@@ -2,13 +2,10 @@
 
 class Transaction
 {
-    private float $amount;
-    private string $description;
+    public ?Customer $customer = null;
 
-    public function __construct(float $amount, string $description)
+    public function __construct(private float $amount, private string $description)
     {
-        $this->amount = $amount;
-        $this->description = $description;
     }
 
     public function addTax(float $rate): Transaction
@@ -27,10 +24,5 @@ class Transaction
     public function getAmount(): float
     {
         return $this->amount;
-    }
-
-    public function __destruct()
-    {
-        echo 'Destruct' . $this->description . '<br>';
     }
 }
