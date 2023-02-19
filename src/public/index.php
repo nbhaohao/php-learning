@@ -2,14 +2,9 @@
 
 declare(strict_types=1);
 
-require_once '../PaymentProfile.php';
-require_once '../Customer.php';
-require_once '../Transaction.php';
+require_once '../PaymentGateway/Stripe/Transaction.php';
+require_once '../PaymentGateway/Paddle/Transaction.php';
 
-$transaction = (new Transaction(100, 'Transaction 1'))
-    ->addTax(8)
-    ->applyDiscount(10);
+use PaymentGateway\Stripe\Transaction;
 
-$transaction->customer = new Customer();
-
-echo $transaction->customer?->paymentProfile?->id ?? 'foo';
+var_dump(new Transaction());
