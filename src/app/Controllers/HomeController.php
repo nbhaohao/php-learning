@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use App\App;
+use App\Models\Invoice;
+use App\Models\SignUp;
+use App\Models\User;
 use App\View;
 
 class HomeController
@@ -12,10 +15,22 @@ class HomeController
     public function index(): View
     {
         $db = App::db();
-        $query = 'SELECT * FROM users';
-        $statement = $db->query($query);
-        var_dump($statement->fetchAll());
-        return View::make('index', ['foo' => 'bar']);
+
+        $email = 'jawdwada@doe.com';
+        $name = 'adafdas Doe';
+        $amount = 25;
+        $userModel = new User();
+        $invoiceModel = new Invoice();
+        $invoiceId = (new SignUp($userModel, $invoiceModel))->register(
+            [
+                'email' => $email,
+                'name' => $name,
+            ],
+            [
+                'amount' => $amount,
+            ]
+        );
+        return View::make('index', ['invoice' => $invoiceModel->find($invoiceId)]);
     }
 
     public function upload(): string
