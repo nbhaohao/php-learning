@@ -2,24 +2,23 @@
 
 declare(strict_types=1);
 
+use App\{Config, Router, App};
+use App\Controllers\HomeController;
+use App\Controllers\InvoiceController;
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
 define('STORAGE_PATH', __DIR__ . '/../storage');
 define('VIEW_PATH', __DIR__ . '/../views');
 
-try {
+$router = new Router();
 
-    $router = new App\Router();
+$router
+    ->get('/', [HomeController::class, 'index'])
+    ->post('/upload', [HomeController::class, 'upload'])
+    ->get('/invoices', [InvoiceController::class, 'index'])
+    ->get('/invoices/create', [InvoiceController::class, 'create'])
+    ->post('/invoices/create', [InvoiceController::class, 'store']);
 
-    $router
-        ->get('/', [\App\Controllers\HomeController::class, 'index'])
-        ->post('/upload', [\App\Controllers\HomeController::class, 'upload'])
-        ->get('/invoices', [\App\Controllers\InvoiceController::class, 'index'])
-        ->get('/invoices/create', [\App\Controllers\InvoiceController::class, 'create'])
-        ->post('/invoices/create', [\App\Controllers\InvoiceController::class, 'store']);
 
-    echo $router->resolve($_SERVER['REQUEST_URI'], strtolower($_SERVER['REQUEST_METHOD']));
-} catch (\App\Exceptions\RouteNotFoundException $e) {
-    http_response_code(404);
-    echo \App\View::make('error/404');
-}
+(new App($router, ['uri' => $_SERVER['REQUEST_URI'], 'method' => $_SERVER['REQUEST_METHOD']], new Config()))->run();
