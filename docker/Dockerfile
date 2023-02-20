@@ -10,5 +10,5 @@ RUN php -r "if (hash_file('sha384', 'composer-setup.php') === '55ce33d7678c5a611
 RUN php composer-setup.php
 RUN php -r "unlink('composer-setup.php');"
 RUN mv composer.phar /usr/local/bin/composer
-
+RUN docker-php-ext-install pdo pdo_mysql
 WORKDIR /var/www
