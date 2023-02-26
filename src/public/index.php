@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\{Config, Router, App, Container};
+use App\{Config, Controllers\GeneratorExampleController, Router, App, Container};
 use App\Controllers\HomeController;
 use App\Controllers\InvoiceController;
 
@@ -19,7 +19,8 @@ $router
     ->post('/upload', [HomeController::class, 'upload'])
     ->get('/invoices', [InvoiceController::class, 'index'])
     ->get('/invoices/create', [InvoiceController::class, 'create'])
-    ->post('/invoices/create', [InvoiceController::class, 'store']);
+    ->post('/invoices/create', [InvoiceController::class, 'store'])
+    ->get('/examples/generator', [GeneratorExampleController::class, 'index']);
 
 
 (new App($container, $router, ['uri' => $_SERVER['REQUEST_URI'], 'method' => $_SERVER['REQUEST_METHOD']], new Config()))->run();
