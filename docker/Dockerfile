@@ -1,4 +1,4 @@
-FROM php:8.0.2-fpm
+FROM php:8.1.0-fpm
 
 RUN sed -i "s@http://\(deb\|security\).debian.org@https://mirrors.ustc.edu.cn@g" /etc/apt/sources.list
 RUN apt-get update

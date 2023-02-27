@@ -12,7 +12,7 @@ class GeneratorExampleController
     {
         $numbers = $this->lazyRange(1, 3000000);
 //        $numbers->next();
- 
+
 //        echo '<pre>';
 //        print_r($numbers->current());
 //        echo '</pre>';
